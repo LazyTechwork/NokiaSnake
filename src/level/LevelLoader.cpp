@@ -1,22 +1,22 @@
 
 #include "LevelLoader.h"
 
-#include <utility>
-#include <dirent.h>
-
 namespace Level {
-    LevelLoader::LevelLoader(std::string basePath) : basePath(std::move(basePath)) {
-        auto dir = opendir(this->basePath.c_str());
-        struct dirent *dirEntry;
-        if (dir != nullptr) {
-            while ((dirEntry = readdir(dir)) != nullptr) {
-                if (dirEntry->d_type == 8) {
-                    loadedLevels.insert(dirEntry->d_name);
+    LevelLoader::LevelLoader(fs::path basePath) : basePath(std::move(basePath)) {
+        introspectLevels();
+    }
+
+    void LevelLoader::introspectLevels() {
+        if (fs::exists(basePath)) {
+            if (fs::is_directory(basePath)) {
+                for (auto const &dirEntry: std::filesystem::recursive_directory_iterator(basePath)) {
+                    if (dirEntry.is_regular_file() && dirEntry.path().extension() == ".level") {
+                        loadedLevels.insert(dirEntry.path());
+                    }
                 }
             }
-            closedir(dir);
         } else {
-            // Error
+            fs::create_directory(basePath);
         }
     }
 } // Level

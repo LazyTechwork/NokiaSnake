@@ -44,6 +44,6 @@ namespace Level {
     }
 
     Point2D Snake::lookingAt() {
-        return Common::directionToPoint2D(direction);
+        return Common::Point2D::fromDirection(direction);
     }
 } // Entity

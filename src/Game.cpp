@@ -1,8 +1,9 @@
 
 #include "Game.h"
+#include <filesystem>
 
 Game::Game() {
-    levelLoader = new Level::LevelLoader();
+    levelLoader = new Level::LevelLoader(fs::absolute(fs::current_path().append("levels")));
 };
 
 Game &Game::getInstance() {

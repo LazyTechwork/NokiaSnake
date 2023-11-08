@@ -5,14 +5,18 @@
 #include <string>
 #include <set>
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 namespace Level {
 
     class LevelLoader {
     private:
-        std::string basePath;
-        std::set<std::string> loadedLevels;
+        fs::path basePath;
+        std::set<fs::path> loadedLevels = {};
     public:
-        explicit LevelLoader(std::string basePath);
+        explicit LevelLoader(fs::path basePath);
+        void introspectLevels();
     };
 
 } // Level

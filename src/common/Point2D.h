@@ -2,6 +2,7 @@
 #define NOKIASNAKE_POINT2D_H
 
 #include <cstdint>
+#include "Direction.h"
 
 namespace Common {
 
@@ -23,6 +24,8 @@ namespace Common {
         bool operator<=(const Point2D &rhs) const;
 
         bool operator>=(const Point2D &rhs) const;
+
+        static Point2D fromDirection(Direction &direction);
     };
 
 } // Common

@@ -21,7 +21,6 @@ add_executable(NokiaSnake main.cpp
         src/level/BlockBorder.h
         src/level/Block.h
         src/level/Block.cpp
-        src/common/Direction.cpp
         src/level/LevelLoader.cpp
         src/level/LevelLoader.h
 )
