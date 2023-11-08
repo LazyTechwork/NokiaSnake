@@ -17,6 +17,7 @@ public:
 private:
     Level::Level *level = nullptr;
     Level::LevelLoader *levelLoader;
+    bool exitLevel = false;
 
     explicit Game();
 
@@ -24,8 +25,11 @@ private:
 
     void mainLoop();
 
+    void update();
+
 public:
     [[nodiscard]] Level::Level *getLevel() const;
+    void fireLevelExit();
 };
 
 

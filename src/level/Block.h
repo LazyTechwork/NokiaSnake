@@ -20,7 +20,7 @@ namespace Level {
          * @param snake Змейка
          * @return необходимо ли уничтожить блок после события
          */
-        virtual bool onSnakeCollides(Snake *snake) = 0;
+        virtual bool onSnakeStepsOn(Snake *snake) = 0;
 
         [[nodiscard]] bool isPassable() const;
     };

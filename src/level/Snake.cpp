@@ -1,5 +1,6 @@
 
 #include "Snake.h"
+#include "../Game.h"
 
 namespace Level {
     Snake::Snake(Level *level, const Point2D &headPosition, int8_t health, Direction direction) : headPosition(
@@ -35,6 +36,9 @@ namespace Level {
 
     void Snake::increaseHealth(int8_t health) {
         Snake::health += health;
+        if (Snake::health <= 0) {
+            Game::getInstance().fireLevelExit();
+        }
     }
 
     void Snake::moveForward() {
