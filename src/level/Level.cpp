@@ -1,4 +1,3 @@
-
 #include "Level.h"
 #include "../Player.h"
 
@@ -31,6 +30,11 @@ namespace Level {
 
     Level::Level(const Point2D &mapSize, std::string levelFile)
             : levelFile(std::move(levelFile)), mapSize(mapSize) {
+
+        if (mapSize < Point2D{10, 10}) {
+            throw std::runtime_error("Cannot create map with sides lower of 10");
+        }
+
         map = new Block **[mapSize.y];
         for (int y = 0; y < mapSize.y; ++y) {
             map[y] = new Block *[mapSize.x];
