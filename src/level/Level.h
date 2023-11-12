@@ -4,6 +4,8 @@
 
 #include "Block.h"
 
+class Player;
+
 namespace Level {
 
     class Snake;
@@ -12,6 +14,7 @@ namespace Level {
     private:
         std::string levelFile;
         Snake *snake;
+        Player *player;
         Block ***map;
         Point2D mapSize;
     public:
@@ -22,6 +25,8 @@ namespace Level {
         explicit Level(const Point2D &mapSize);
 
         [[nodiscard]] const std::string &getLevelFile() const;
+
+        [[nodiscard]] Player *getPlayer() const;
 
         [[nodiscard]] Snake *getSnake() const;
 

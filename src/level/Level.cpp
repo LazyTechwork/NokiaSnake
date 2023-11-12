@@ -1,5 +1,6 @@
 
 #include "Level.h"
+#include "../Player.h"
 
 #include <stdexcept>
 
@@ -49,6 +50,8 @@ namespace Level {
                     Common::Direction::UP
             );
         }
+
+        player = new Player(this);
     }
 
     Level::Level() {
@@ -56,18 +59,15 @@ namespace Level {
     };
 
     Level::~Level() {
-        for (int y = 0; y < mapSize.y; ++y) {
-            for (int x = 0; x < mapSize.x; ++x)
-                delete map[y][x];
-
+        for (int y = 0; y < mapSize.y; ++y)
             delete map[y];
-        }
 
         delete map;
+        delete player;
         delete snake;
     }
 
-    Level::Level(const Point2D &mapSize) : Level(mapSize) {
+    Level::Level(const Point2D &mapSize) : Level(mapSize, "") {
 
     }
 
@@ -81,6 +81,7 @@ namespace Level {
         std::swap(map, l.map);
         std::swap(mapSize, l.mapSize);
         std::swap(snake, l.snake);
+        std::swap(player, l.player);
         std::swap(levelFile, l.levelFile);
 
         return *this;
@@ -90,6 +91,7 @@ namespace Level {
         std::swap(map, l.map);
         std::swap(mapSize, l.mapSize);
         std::swap(snake, l.snake);
+        std::swap(player, l.player);
         std::swap(levelFile, l.levelFile);
     }
 
@@ -98,8 +100,13 @@ namespace Level {
             std::swap(map, l.map);
             std::swap(mapSize, l.mapSize);
             std::swap(snake, l.snake);
+            std::swap(player, l.player);
             std::swap(levelFile, l.levelFile);
         }
         return *this;
+    }
+
+    Player *Level::getPlayer() const {
+        return player;
     }
 } // Level

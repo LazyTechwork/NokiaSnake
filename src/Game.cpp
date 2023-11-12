@@ -1,5 +1,5 @@
-
 #include "Game.h"
+#include "Player.h"
 #include <filesystem>
 #include <chrono>
 #include <thread>
@@ -37,5 +37,5 @@ void Game::fireLevelExit() {
 }
 
 void Game::update() {
-
+    level->getPlayer()->doTick();
 }
