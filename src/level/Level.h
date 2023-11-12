@@ -15,6 +15,12 @@ namespace Level {
         Block ***map;
         Point2D mapSize;
     public:
+        Level();
+
+        Level(const Point2D &mapSize, std::string levelFile, Snake *snake);
+
+        explicit Level(const Point2D &mapSize, Snake *snake);
+
         [[nodiscard]] const std::string &getLevelFile() const;
 
         [[nodiscard]] Snake *getSnake() const;
@@ -26,6 +32,17 @@ namespace Level {
         [[nodiscard]] Block *getBlock(Point2D p) const;
 
         void destroyBlock(Point2D p);
+
+        virtual ~Level();
+
+        Level(const Level &levelCopy);
+
+        Level &operator=(const Level &levelCopy);
+
+        Level(Level &&l) noexcept;
+
+        Level &operator=(Level &&l) noexcept;
+
     };
 
 } // Level
