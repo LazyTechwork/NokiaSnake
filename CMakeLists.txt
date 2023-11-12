@@ -23,4 +23,6 @@ add_executable(NokiaSnake main.cpp
         src/level/Block.cpp
         src/level/LevelLoader.cpp
         src/level/LevelLoader.h
+        src/Player.cpp
+        src/Player.h
 )

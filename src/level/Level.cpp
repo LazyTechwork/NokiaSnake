@@ -28,8 +28,8 @@ namespace Level {
         map[p.y][p.x] = nullptr;
     }
 
-    Level::Level(const Point2D &mapSize, std::string levelFile, Snake *snake)
-            : levelFile(std::move(levelFile)), mapSize(mapSize), snake(snake) {
+    Level::Level(const Point2D &mapSize, std::string levelFile)
+            : levelFile(std::move(levelFile)), mapSize(mapSize) {
         map = new Block **[mapSize.y];
         for (int y = 0; y < mapSize.y; ++y) {
             map[y] = new Block *[mapSize.x];
@@ -39,6 +39,15 @@ namespace Level {
 
         if (!getLevelFile().empty()) {
             // Level loader logic
+        }
+
+        if (snake == nullptr) {
+            snake = new Snake(
+                    this,
+                    {static_cast<int16_t>(mapSize.x / 2), static_cast<int16_t>(mapSize.y / 2)},
+                    3,
+                    Common::Direction::UP
+            );
         }
     }
 
@@ -55,14 +64,14 @@ namespace Level {
         }
 
         delete map;
+        delete snake;
     }
 
-    Level::Level(const Point2D &mapSize, Snake *snake) : Level(mapSize, "", snake) {
+    Level::Level(const Point2D &mapSize) : Level(mapSize) {
 
     }
 
-    Level::Level(const Level &levelCopy) : Level(levelCopy.getMapSize(), levelCopy.getLevelFile(),
-                                                 levelCopy.getSnake()) {
+    Level::Level(const Level &levelCopy) : Level(levelCopy.getMapSize(), levelCopy.getLevelFile()) {
         for (int y = 0; y < mapSize.y; ++y)
             std::copy(levelCopy.getMap()[y], levelCopy.getMap()[y] + mapSize.y, map[y]);
     }

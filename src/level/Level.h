@@ -17,9 +17,9 @@ namespace Level {
     public:
         Level();
 
-        Level(const Point2D &mapSize, std::string levelFile, Snake *snake);
+        Level(const Point2D &mapSize, std::string levelFile);
 
-        explicit Level(const Point2D &mapSize, Snake *snake);
+        explicit Level(const Point2D &mapSize);
 
         [[nodiscard]] const std::string &getLevelFile() const;
 

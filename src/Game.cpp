@@ -21,7 +21,7 @@ Level::Level *Game::getLevel() const {
 
 void Game::mainLoop() {
     while (true) {
-        if (exitLevel) {
+        if (exitLevel || level == nullptr) {
             exitLevel = false;
             return;
         }
@@ -37,20 +37,5 @@ void Game::fireLevelExit() {
 }
 
 void Game::update() {
-    auto lookingAt = level->getSnake()->lookingAt();
-    if (lookingAt < zeroPoint || lookingAt > level->getMapSize()) {
-        return;
-    }
 
-    auto lookingAtBlock = level->getBlock(lookingAt);
-    if (lookingAtBlock != nullptr) {
-        if (!lookingAtBlock->isPassable()) {
-            level->getSnake()->increaseHealth(-1);
-        } else {
-            level->getSnake()->moveForward();
-            lookingAtBlock->onSnakeStepsOn(level->getSnake());
-        }
-    } else {
-        level->getSnake()->moveForward();
-    }
 }
