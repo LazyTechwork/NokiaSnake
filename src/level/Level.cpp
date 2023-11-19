@@ -64,9 +64,9 @@ namespace Level {
 
     Level::~Level() {
         for (int y = 0; y < mapSize.y; ++y)
-            delete map[y];
+            delete []map[y];
 
-        delete map;
+        delete []map;
         delete player;
         delete snake;
     }
