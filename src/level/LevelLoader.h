@@ -6,6 +6,8 @@
 #include <set>
 
 #include <filesystem>
+#include "Level.h"
+
 namespace fs = std::filesystem;
 
 namespace Level {
@@ -16,7 +18,10 @@ namespace Level {
         std::set<fs::path> loadedLevels = {};
     public:
         explicit LevelLoader(fs::path basePath);
+
         void introspectLevels();
+
+        static Level *loadLevel(const fs::path& file);
     };
 
 } // Level

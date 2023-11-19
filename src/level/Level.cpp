@@ -2,9 +2,11 @@
 #include "../Player.h"
 
 #include <stdexcept>
+#include <filesystem>
+#include <utility>
 
 namespace Level {
-    const std::string &Level::getLevelFile() const {
+    const std::filesystem::path &Level::getLevelFile() const {
         return levelFile;
     }
 
@@ -28,7 +30,7 @@ namespace Level {
         map[p.y][p.x] = nullptr;
     }
 
-    Level::Level(const Point2D &mapSize, std::string levelFile)
+    Level::Level(const Point2D &mapSize, std::filesystem::path levelFile)
             : levelFile(std::move(levelFile)), mapSize(mapSize) {
 
         if (mapSize < Point2D{10, 10}) {

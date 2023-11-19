@@ -92,7 +92,7 @@ int main() {
             "BBBBBBBBBBBBBBBBBBBBBBBBB"
     };*/
 
-    for (int16_t y = 0; y < 25; ++y) {
+    /*for (int16_t y = 0; y < 25; ++y) {
         auto s = stringMap[y];
         for (int16_t x = 0, l = s.length(); x < l; ++x) {
             switch (s[x]) {
@@ -122,7 +122,9 @@ int main() {
 
     std::ofstream levelFile("./levels/standard_level1.level", std::ios::binary | std::ios::out);
     levelFile << l;
-    levelFile.close();
+    levelFile.close();*/
+
+    auto l = Level::LevelLoader::loadLevel("./levels/standard_level1.level");
 
     std::cout << "Hello, World!" << std::endl;
     return 0;

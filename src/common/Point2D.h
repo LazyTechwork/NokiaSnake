@@ -14,9 +14,7 @@ namespace Common {
 
         Point2D operator+(Point2D p) const;
 
-        Point2D operator-() const;
-
-        Point2D operator-(Point2D p) const;
+        Point2D operator-(const Point2D &p) const;
 
         Point2D &operator+=(const Point2D &p);
 

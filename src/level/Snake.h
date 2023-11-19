@@ -29,6 +29,8 @@ namespace Level {
 
         void pushTail(Point2D p);
 
+        void pushTail();
+
         void pushTail(std::vector<Point2D> &p);
 
         void eatTail(uint8_t count);

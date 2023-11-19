@@ -75,4 +75,8 @@ namespace Level {
     void Snake::setHeadPosition(const Point2D &headPosition) {
         Snake::headPosition = headPosition;
     }
+
+    void Snake::pushTail() {
+        tail.push_back((tail.empty() ? headPosition : tail.back()) - Common::Point2D::fromDirection(direction));
+    }
 } // Entity
