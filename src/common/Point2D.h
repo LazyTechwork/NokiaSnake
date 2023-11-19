@@ -6,14 +6,19 @@
 
 namespace Common {
 
+#pragma pack(push, 1)
+
     struct Point2D {
         int16_t x;
         int16_t y;
 
         Point2D operator+(Point2D p) const;
+
         Point2D operator-() const;
+
         Point2D operator-(Point2D p) const;
-        Point2D& operator+=(const Point2D& p);
+
+        Point2D &operator+=(const Point2D &p);
 
         bool operator==(const Point2D &rhs) const;
 
@@ -29,6 +34,8 @@ namespace Common {
 
         static Point2D fromDirection(Direction &direction);
     };
+
+#pragma pack(pop)
 
 } // Common
 

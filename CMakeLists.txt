@@ -33,4 +33,7 @@ add_executable(NokiaSnake main.cpp
         src/event/IncreaseScoreEvent.h
         src/event/TeleportSnake.cpp
         src/event/TeleportSnake.h
+        src/contract/LevelContract.cpp
+        src/contract/LevelContract.h
+        src/contract/MapBlockType.h
 )
