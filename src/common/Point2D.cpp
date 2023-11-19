@@ -55,4 +55,12 @@ namespace Common {
 
         return {0, 0};
     }
+
+    Point2D Point2D::operator-() const {
+        return {static_cast<int16_t>(-x), static_cast<int16_t>(-y)};
+    }
+
+    Point2D Point2D::operator-(Point2D p) const {
+        return *this + (-p);
+    }
 } // Common

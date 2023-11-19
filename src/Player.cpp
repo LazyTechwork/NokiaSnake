@@ -4,7 +4,7 @@
 Player::Player(Level::Level *level) : level(level) {}
 
 void Player::doTick() {
-    auto lookingAt = level->getSnake()->lookingAt();
+    auto lookingAt = level->getSnake().lookingAt();
     if (lookingAt < Game::zeroPoint || lookingAt > level->getMapSize()) {
         return;
     }
@@ -12,12 +12,12 @@ void Player::doTick() {
     auto lookingAtBlock = level->getBlock(lookingAt);
     if (lookingAtBlock != nullptr) {
         if (!lookingAtBlock->isPassable()) {
-            level->getSnake()->increaseHealth(-1);
+            level->getSnake().increaseHealth(-1);
         } else {
-            level->getSnake()->moveForward();
+            level->getSnake().moveForward();
             lookingAtBlock->onSnakeStepsOn(level->getSnake());
         }
     } else {
-        level->getSnake()->moveForward();
+        level->getSnake().moveForward();
     }
 }

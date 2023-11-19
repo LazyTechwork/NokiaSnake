@@ -1,9 +1,9 @@
-
 #ifndef NOKIASNAKE_BLOCK_H
 #define NOKIASNAKE_BLOCK_H
 
 #include <string>
 #include "Snake.h"
+#include "../event/BlockEvent.h"
 
 namespace Level {
 
@@ -12,6 +12,8 @@ namespace Level {
      * Может являться как барьером, так и едой.
      */
     class Block {
+    private:
+        Event::BlockEvent *snakeStepsOnEvent = nullptr;
     protected:
         bool passable = true;
     public:
@@ -20,7 +22,9 @@ namespace Level {
          * @param snake Змейка
          * @return необходимо ли уничтожить блок после события
          */
-        virtual bool onSnakeStepsOn(Snake *snake) = 0;
+        bool onSnakeStepsOn(Snake &snake);
+
+        void setSnakeStepsOnEvent(Event::BlockEvent *snakeStepsOnEvent);
 
         [[nodiscard]] bool isPassable() const;
     };

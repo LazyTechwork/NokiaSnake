@@ -37,5 +37,5 @@ void Game::fireLevelExit() {
 }
 
 void Game::update() {
-    level->getPlayer()->doTick();
+    level->getPlayer().doTick();
 }

@@ -3,7 +3,7 @@
 #include "../Game.h"
 
 namespace Level {
-    Snake::Snake(Level *level, const Point2D &headPosition, int8_t health, Direction direction) : headPosition(
+    Snake::Snake(Level &level, const Point2D &headPosition, int8_t health, Direction direction) : headPosition(
             headPosition), direction(direction), health(health), level(level) {}
 
     const Point2D &Snake::getHeadPosition() const {
@@ -22,7 +22,7 @@ namespace Level {
         return health;
     }
 
-    Level *Snake::getLevel() const {
+    Level &Snake::getLevel() const {
         return level;
     }
 
@@ -49,5 +49,30 @@ namespace Level {
 
     Point2D Snake::lookingAt() {
         return Common::Point2D::fromDirection(direction);
+    }
+
+    void Snake::pushTail(Point2D p) {
+        tail.push_back(p);
+    }
+
+    void Snake::pushTail(std::vector<Point2D> &p) {
+        auto newTailSize = tail.size() + p.size();
+        if (tail.max_size() > newTailSize)
+            tail.resize(newTailSize + 1);
+
+        for (const auto &item: p)
+            tail.push_back(item);
+    }
+
+    uint16_t Snake::getScore() {
+        return tail.size();
+    }
+
+    void Snake::eatTail(uint8_t count) {
+        tail.resize(tail.size() - count);
+    }
+
+    void Snake::setHeadPosition(const Point2D &headPosition) {
+        Snake::headPosition = headPosition;
     }
 } // Entity

@@ -8,8 +8,8 @@ namespace Level {
         return levelFile;
     }
 
-    Snake *Level::getSnake() const {
-        return snake;
+    Snake & Level::getSnake() const {
+        return *snake;
     }
 
     Block ***Level::getMap() const {
@@ -20,7 +20,7 @@ namespace Level {
         return mapSize;
     }
 
-    Block *Level::getBlock(Point2D p) const {
+    Block * Level::getBlock(Point2D p) const {
         return map[p.y][p.x];
     }
 
@@ -48,7 +48,7 @@ namespace Level {
 
         if (snake == nullptr) {
             snake = new Snake(
-                    this,
+                    *this,
                     {static_cast<int16_t>(mapSize.x / 2), static_cast<int16_t>(mapSize.y / 2)},
                     3,
                     Common::Direction::UP
@@ -110,7 +110,7 @@ namespace Level {
         return *this;
     }
 
-    Player *Level::getPlayer() const {
-        return player;
+    Player & Level::getPlayer() const {
+        return *player;
     }
 } // Level

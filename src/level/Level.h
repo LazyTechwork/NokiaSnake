@@ -26,15 +26,15 @@ namespace Level {
 
         [[nodiscard]] const std::string &getLevelFile() const;
 
-        [[nodiscard]] Player *getPlayer() const;
+        [[nodiscard]] Player & getPlayer() const;
 
-        [[nodiscard]] Snake *getSnake() const;
+        [[nodiscard]] Snake & getSnake() const;
 
         [[nodiscard]] Block ***getMap() const;
 
         [[nodiscard]] const Point2D &getMapSize() const;
 
-        [[nodiscard]] Block *getBlock(Point2D p) const;
+        [[nodiscard]] Block * getBlock(Point2D p) const;
 
         void destroyBlock(Point2D p);
 

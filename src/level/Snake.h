@@ -3,6 +3,7 @@
 #define NOKIASNAKE_SNAKE_H
 
 #include <deque>
+#include <vector>
 #include "../common/Point2D.h"
 #include "../common/Direction.h"
 
@@ -18,19 +19,29 @@ namespace Level {
         std::deque<Point2D> tail;
         Direction direction = Direction::UP;
         int8_t health = INT8_MAX;
-        Level *level;
+        Level &level;
     public:
-        Snake(Level *level, const Point2D &headPosition, int8_t health, Direction direction);
+        Snake(Level &level, const Point2D &headPosition, int8_t health, Direction direction);
 
         [[nodiscard]] const Point2D &getHeadPosition() const;
 
         [[nodiscard]] const std::deque<Point2D> &getTail() const;
 
+        void pushTail(Point2D p);
+
+        void pushTail(std::vector<Point2D> &p);
+
+        void eatTail(uint8_t count);
+
+        [[nodiscard]] uint16_t getScore();
+
+        void setHeadPosition(const Point2D &headPosition);
+
         [[nodiscard]] Direction getDirection() const;
 
         [[nodiscard]] int8_t getHealth() const;
 
-        [[nodiscard]] Level *getLevel() const;
+        [[nodiscard]] Level &getLevel() const;
 
         void moveForward();
 

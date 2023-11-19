@@ -1,4 +1,3 @@
-
 #ifndef NOKIASNAKE_GAME_H
 #define NOKIASNAKE_GAME_H
 
