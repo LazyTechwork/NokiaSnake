@@ -9,7 +9,7 @@ namespace Level {
 
     class BlockFood : public Block {
     private:
-        static Event::BlockEvent *event;
+        Event::BlockEvent *event = nullptr;
     public:
         BlockFood();
     };

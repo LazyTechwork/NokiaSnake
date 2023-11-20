@@ -25,7 +25,6 @@ add_executable(NokiaSnake main.cpp
         src/level/LevelLoader.h
         src/Player.cpp
         src/Player.h
-        src/event/BlockEvent.cpp
         src/event/BlockEvent.h
         src/event/DealSnakeDamageEvent.cpp
         src/event/DealSnakeDamageEvent.h
