@@ -4,12 +4,15 @@
 
 #include "level/Snake.h"
 #include "level/Level.h"
+#include "event/DealSnakeDamageEvent.h"
 
 class Player {
 private:
     Level::Level *level;
+    Event::DealSnakeDamageEvent damageEvent{1};
 public:
     explicit Player(Level::Level *level);
+
     void doTick();
 };
 

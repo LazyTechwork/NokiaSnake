@@ -12,7 +12,7 @@ void Player::doTick() {
     auto lookingAtBlock = level->getBlock(lookingAt);
     if (lookingAtBlock != nullptr) {
         if (!lookingAtBlock->isPassable()) {
-            level->getSnake().increaseHealth(-1);
+            damageEvent.dispatch(level->getSnake(), *lookingAtBlock);
         } else {
             level->getSnake().moveForward();
             lookingAtBlock->onSnakeStepsOn(level->getSnake());
