@@ -3,10 +3,13 @@
 #define NOKIASNAKE_BLOCKFOOD_H
 
 #include "Block.h"
+#include "../event/IncreaseScoreEvent.h"
 
 namespace Level {
 
-    class BlockFood: public Block {
+    class BlockFood : public Block {
+    private:
+        static Event::BlockEvent *event;
     public:
         BlockFood();
     };
