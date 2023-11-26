@@ -7,6 +7,8 @@
 namespace Level {
 
     class BlockGate: public Block {
+    private:
+        Event::BlockEvent *event = nullptr;
     public:
         BlockGate();
     };
