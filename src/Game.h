@@ -47,7 +47,7 @@ public:
 
     std::vector<Model::LevelInfo> getAvailableLevels();
 
-    void initialize(Model::LevelInfo &level);
+    void initialize(Model::LevelInfo &levelInfo);
 
     void setGameProxy(Proxy::GameProxy *proxy);
 };

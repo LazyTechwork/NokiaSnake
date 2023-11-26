@@ -82,3 +82,9 @@ void Game::processInput() {
         gameProxy->getActionQueue().pop();
     }
 }
+
+void Game::initialize(Model::LevelInfo &levelInfo) {
+    auto loadedLevel = Level::LevelLoader::loadLevel(levelInfo.path);
+    this->level = loadedLevel;
+    mainLoop();
+}
