@@ -5,6 +5,7 @@
 #include "level/Level.h"
 #include "level/LevelLoader.h"
 #include "model/LevelInfo.h"
+#include "proxy/GameProxy.h"
 #include <filesystem>
 
 using Common::Point2D;
@@ -19,6 +20,7 @@ public:
 private:
     Level::Level *level = nullptr;
     Level::LevelLoader *levelLoader;
+    Proxy::GameProxy &gameProxy;
     bool exitLevel = false;
 
     explicit Game();
@@ -37,6 +39,8 @@ public:
     std::vector<Model::LevelInfo> getAvailableLevels();
 
     void initialize(Model::LevelInfo &level);
+
+    void setGameProxy(Proxy::GameProxy &proxy);
 };
 
 

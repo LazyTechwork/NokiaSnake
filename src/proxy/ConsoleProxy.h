@@ -3,21 +3,33 @@
 
 #include <queue>
 #include <cstdint>
+#include <map>
+#include "GameProxy.h"
+#include "../common/InputAction.h"
 
 namespace Proxy {
 
-    class ConsoleProxy {
+    class ConsoleProxy : public GameProxy {
     private:
-        std::queue<int> inputQueue = {};
+        ActionQueue actionQueue = {};
+        std::map<int, Common::InputAction> keyMappings;
         bool firedTermination = false;
     public:
         virtual ~ConsoleProxy();
 
         ConsoleProxy();
+
         void inputHandler();
+
         void terminate();
+
+        void registerKeyMappings(std::map<int, InputAction> mappings);
+
+        void registerKeyMapping(int key, InputAction action);
+
+        ActionQueue &getActionQueue();
     };
 
-} // Proxy
+} // Common
 
 #endif //NOKIASNAKE_CONSOLEPROXY_H

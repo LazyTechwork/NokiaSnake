@@ -1,14 +1,20 @@
 #include "ConsoleProxy.h"
 #include <ncurses.h>
 
+#include <utility>
+
 namespace Proxy {
     void ConsoleProxy::inputHandler() {
         int key;
-        while (!firedTermination && (key = getch()) != ERR) {
-            inputQueue.push(key);
-            mvwprintw(stdscr, 0, 0, "Key pressed is = %3d Hopefully it can be printed as '%c'", key, key);
-            refresh();
+        while (!firedTermination) {
+            if ((key = getch()) != ERR && keyMappings.contains(key)) {
+                actionQueue.push(keyMappings[key]);
+                mvwprintw(stdscr, 0, 0, "Used action: %d", keyMappings[key]);
+                refresh();
+            }
         }
+
+        firedTermination = false;
     }
 
     void ConsoleProxy::terminate() {
@@ -29,4 +35,16 @@ namespace Proxy {
     ConsoleProxy::~ConsoleProxy() {
         endwin();
     }
-} // Proxy
+
+    void ConsoleProxy::registerKeyMappings(std::map<int, InputAction> mappings) {
+        keyMappings = std::move(mappings);
+    }
+
+    void ConsoleProxy::registerKeyMapping(int key, InputAction action) {
+        keyMappings[key] = action;
+    }
+
+    ActionQueue &ConsoleProxy::getActionQueue() {
+        return actionQueue;
+    }
+} // Common
