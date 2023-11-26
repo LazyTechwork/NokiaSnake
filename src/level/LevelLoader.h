@@ -22,6 +22,8 @@ namespace Level {
         void introspectLevels();
 
         static Level *loadLevel(const fs::path& file);
+
+        const std::set<fs::path> &getLoadedLevels() const;
     };
 
 } // Level

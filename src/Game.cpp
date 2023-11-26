@@ -1,8 +1,10 @@
 #include "Game.h"
 #include "Player.h"
+#include "contract/LevelContract.h"
 #include <filesystem>
 #include <chrono>
 #include <thread>
+#include <fstream>
 
 Game::Game() {
     levelLoader = new Level::LevelLoader(
@@ -38,4 +40,21 @@ void Game::fireLevelExit() {
 
 void Game::update() {
     level->getPlayer().doTick();
+}
+
+std::vector<Model::LevelInfo> Game::getAvailableLevels() {
+    levelLoader->introspectLevels();
+    std::vector<Model::LevelInfo> levels{};
+    auto levelFiles = levelLoader->getLoadedLevels();
+    for (const auto &levelFile: levelFiles) {
+        std::ifstream fd(levelFile, std::ios::in | std::ios::binary);
+        Contract::LevelContract contract;
+        fd >> contract;
+        fd.close();
+        levels.push_back(Model::LevelInfo{
+                contract.name,
+                levelFile
+        });
+    }
+    return levels;
 }

@@ -67,4 +67,8 @@ namespace Level {
         }
         return nullptr;
     }
+
+    const std::set<fs::path> &LevelLoader::getLoadedLevels() const {
+        return loadedLevels;
+    }
 } // Level

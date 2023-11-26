@@ -4,8 +4,11 @@
 #include "./common/Point2D.h"
 #include "level/Level.h"
 #include "level/LevelLoader.h"
+#include "model/LevelInfo.h"
+#include <filesystem>
 
 using Common::Point2D;
+namespace fs = std::filesystem;
 
 class Game {
 public:
@@ -28,7 +31,12 @@ private:
 
 public:
     [[nodiscard]] Level::Level *getLevel() const;
+
     void fireLevelExit();
+
+    std::vector<Model::LevelInfo> getAvailableLevels();
+
+    void initialize(Model::LevelInfo &level);
 };
 
 

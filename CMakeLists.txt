@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 project(NokiaSnake)
 
 set(CMAKE_CXX_STANDARD 20)
+#set(CMAKE_CXX_FLAGS "-lncurses")
 
 add_executable(NokiaSnake main.cpp
         src/common/Point2D.cpp
@@ -35,4 +36,9 @@ add_executable(NokiaSnake main.cpp
         src/contract/LevelContract.cpp
         src/contract/LevelContract.h
         src/contract/MapBlockType.h
+        src/model/LevelInfo.h
+        src/proxy/ConsoleProxy.cpp
+        src/proxy/ConsoleProxy.h
 )
+
+target_link_libraries(NokiaSnake ncurses)
