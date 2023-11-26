@@ -9,7 +9,7 @@ int main() {
     setlocale(LC_ALL, "");
     auto game = Game::getInstance();
 
-    auto proxy = Proxy::ConsoleProxy();
+    auto proxy = new Proxy::ConsoleProxy();
     if (!std::filesystem::exists("./settings.dat")) {
         std::ofstream settingsFile("./settings.dat", std::ios::out | std::ios::binary);
         settingsFile << Contract::UserSettingsContract{
@@ -27,8 +27,8 @@ int main() {
     std::ifstream settingsFile("./settings.dat", std::ios::in | std::ios::binary);
     settingsFile >> userSettings;
     settingsFile.close();
-    proxy.registerKeyMappings(userSettings.keyMappings);
-    proxy.inputHandler();
+    proxy->registerKeyMappings(userSettings.keyMappings);
+    proxy->inputHandler();
 
     game.setGameProxy(proxy);
     std::cout << "Hello, World!" << std::endl;

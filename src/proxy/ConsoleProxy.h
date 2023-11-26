@@ -12,22 +12,22 @@ namespace Proxy {
     class ConsoleProxy : public GameProxy {
     private:
         ActionQueue actionQueue = {};
-        std::map<int, Common::InputAction> keyMappings;
+        InputMappings keyMappings;
         bool firedTermination = false;
     public:
         virtual ~ConsoleProxy();
 
         ConsoleProxy();
 
-        void inputHandler();
+        void inputHandler() override;
 
-        void terminate();
+        void terminate() override;
 
-        void registerKeyMappings(std::map<int, InputAction> mappings);
+        void registerKeyMappings(InputMappings mappings) override;
 
-        void registerKeyMapping(int key, InputAction action);
+        void registerKeyMapping(int key, Common::InputAction action) override;
 
-        ActionQueue &getActionQueue();
+        ActionQueue &getActionQueue() override;
     };
 
 } // Common

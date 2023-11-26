@@ -7,6 +7,7 @@
 #include "model/LevelInfo.h"
 #include "proxy/GameProxy.h"
 #include <filesystem>
+#include <map>
 
 using Common::Point2D;
 namespace fs = std::filesystem;
@@ -20,8 +21,14 @@ public:
 private:
     Level::Level *level = nullptr;
     Level::LevelLoader *levelLoader;
-    Proxy::GameProxy &gameProxy;
+    Proxy::GameProxy *gameProxy = nullptr;
     bool exitLevel = false;
+    std::map<Common::InputAction, Common::Direction> inputActionDirectionMapping = {
+            {Common::InputAction::TURN_UP, Common::Direction::UP},
+            {Common::InputAction::TURN_DOWN, Common::Direction::DOWN},
+            {Common::InputAction::TURN_LEFT, Common::Direction::LEFT},
+            {Common::InputAction::TURN_RIGHT, Common::Direction::RIGHT},
+    };
 
     explicit Game();
 
@@ -31,16 +38,18 @@ private:
 
     void update();
 
+    void processInput();
+
 public:
     [[nodiscard]] Level::Level *getLevel() const;
 
-    void fireLevelExit();
+    void fireLevelExit(bool win);
 
     std::vector<Model::LevelInfo> getAvailableLevels();
 
     void initialize(Model::LevelInfo &level);
 
-    void setGameProxy(Proxy::GameProxy &proxy);
+    void setGameProxy(Proxy::GameProxy *proxy);
 };
 
 

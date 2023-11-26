@@ -28,18 +28,21 @@ void Game::mainLoop() {
             return;
         }
 
+        processInput();
         update();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
 
-void Game::fireLevelExit() {
+void Game::fireLevelExit(bool win) {
     exitLevel = true;
 }
 
 void Game::update() {
     level->getPlayer().doTick();
+    if (level->getSnake().getHealth() <= 0)
+        fireLevelExit(false);
 }
 
 std::vector<Model::LevelInfo> Game::getAvailableLevels() {
@@ -59,6 +62,23 @@ std::vector<Model::LevelInfo> Game::getAvailableLevels() {
     return levels;
 }
 
-void Game::setGameProxy(Proxy::GameProxy &proxy) {
+void Game::setGameProxy(Proxy::GameProxy *proxy) {
     gameProxy = proxy;
+}
+
+void Game::processInput() {
+    while (!gameProxy->getActionQueue().empty()) {
+        auto action = gameProxy->getActionQueue().front();
+        switch (action) {
+            case Common::InputAction::TURN_LEFT:
+            case Common::InputAction::TURN_RIGHT:
+            case Common::InputAction::TURN_UP:
+            case Common::InputAction::TURN_DOWN:
+                level->getSnake().setDirection(inputActionDirectionMapping[action]);
+                break;
+            default:
+                break;
+        }
+        gameProxy->getActionQueue().pop();
+    }
 }

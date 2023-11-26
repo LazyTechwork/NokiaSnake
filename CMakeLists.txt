@@ -44,6 +44,8 @@ add_executable(NokiaSnake main.cpp
         src/contract/UserSettingsContract.h
         src/proxy/GameProxy.cpp
         src/proxy/GameProxy.h
+        src/event/LevelPassEvent.cpp
+        src/event/LevelPassEvent.h
 )
 
 target_link_libraries(NokiaSnake ncurses)

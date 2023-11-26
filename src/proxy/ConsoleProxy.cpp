@@ -36,11 +36,11 @@ namespace Proxy {
         endwin();
     }
 
-    void ConsoleProxy::registerKeyMappings(std::map<int, InputAction> mappings) {
+    void ConsoleProxy::registerKeyMappings(InputMappings mappings) {
         keyMappings = std::move(mappings);
     }
 
-    void ConsoleProxy::registerKeyMapping(int key, InputAction action) {
+    void ConsoleProxy::registerKeyMapping(int key, Common::InputAction action) {
         keyMappings[key] = action;
     }
 

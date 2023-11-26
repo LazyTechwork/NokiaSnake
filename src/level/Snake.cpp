@@ -37,7 +37,7 @@ namespace Level {
     void Snake::increaseHealth(int8_t health) {
         Snake::health += health;
         if (Snake::health <= 0) {
-            Game::getInstance().fireLevelExit();
+            Game::getInstance().fireLevelExit(false);
         }
     }
 
