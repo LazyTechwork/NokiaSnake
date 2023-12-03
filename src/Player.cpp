@@ -15,7 +15,9 @@ void Player::doTick() {
             damageEvent.dispatch(level->getSnake(), *lookingAtBlock);
         } else {
             level->getSnake().moveForward();
-            lookingAtBlock->onSnakeStepsOn(level->getSnake());
+            if(lookingAtBlock->onSnakeStepsOn(level->getSnake())) {
+                level->destroyBlock(lookingAt);
+            }
         }
     } else {
         level->getSnake().moveForward();

@@ -8,6 +8,7 @@
 #include "proxy/GameProxy.h"
 #include <filesystem>
 #include <map>
+#include <random>
 
 using Common::Point2D;
 namespace fs = std::filesystem;
@@ -22,6 +23,8 @@ private:
     Level::Level *level = nullptr;
     Level::LevelLoader *levelLoader;
     Proxy::GameProxy *gameProxy = nullptr;
+    std::default_random_engine randomEngine;
+    const uint8_t maxFoodOnLevel = 5;
     bool exitLevel = false;
     struct ExitStatus {
         bool exitIsWin = false;
@@ -40,6 +43,8 @@ private:
 
     void mainLoop();
 
+    void generateFood();
+
     void update();
 
     void processInput();
@@ -55,8 +60,7 @@ public:
 
     void setGameProxy(Proxy::GameProxy *proxy);
 
-    const ExitStatus &getExitStatus() const;
+    [[nodiscard]] const ExitStatus &getExitStatus() const;
 };
-
 
 #endif //NOKIASNAKE_GAME_H

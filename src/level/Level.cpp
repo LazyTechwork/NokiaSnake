@@ -10,7 +10,7 @@ namespace Level {
         return levelFile;
     }
 
-    Snake & Level::getSnake() const {
+    Snake &Level::getSnake() const {
         return *snake;
     }
 
@@ -22,7 +22,7 @@ namespace Level {
         return mapSize;
     }
 
-    Block * Level::getBlock(Point2D p) const {
+    Block *Level::getBlock(Point2D p) const {
         return map[p.y][p.x];
     }
 
@@ -66,9 +66,9 @@ namespace Level {
 
     Level::~Level() {
         for (int y = 0; y < mapSize.y; ++y)
-            delete []map[y];
+            delete[]map[y];
 
-        delete []map;
+        delete[]map;
         delete player;
         delete snake;
     }
@@ -112,7 +112,7 @@ namespace Level {
         return *this;
     }
 
-    Player & Level::getPlayer() const {
+    Player &Level::getPlayer() const {
         return *player;
     }
 
@@ -122,5 +122,20 @@ namespace Level {
 
     void Level::setName(const std::string &name) {
         Level::name = name;
+    }
+
+    uint8_t Level::countFood() {
+        uint8_t result = 0;
+        Block *block;
+        for (int y = 0; y < mapSize.y; ++y)
+            for (int x = 0; x < mapSize.x; ++x)
+                if ((block = map[y][x]) != nullptr && block->getResourceName() == "food")
+                    ++result;
+
+        return result;
+    }
+
+    void Level::setBlock(Block *b, Point2D p) {
+        map[p.y][p.x] = b;
     }
 } // Level

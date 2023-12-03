@@ -38,6 +38,8 @@ namespace Level {
 
         [[nodiscard]] Block * getBlock(Point2D p) const;
 
+        void setBlock(Block *b, Point2D p);
+
         void destroyBlock(Point2D p);
 
         virtual ~Level();
@@ -53,6 +55,8 @@ namespace Level {
         const std::string &getName() const;
 
         void setName(const std::string &name);
+
+        uint8_t countFood();
 
     };
 

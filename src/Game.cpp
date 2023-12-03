@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "contract/LevelContract.h"
+#include "level/BlockFood.h"
 #include <filesystem>
 #include <chrono>
 #include <thread>
@@ -10,6 +11,8 @@ Game::Game() {
     levelLoader = new Level::LevelLoader(
             fs::absolute(fs::current_path().append("levels"))
     );
+    std::random_device rd;
+    randomEngine.seed(rd());
 };
 
 Game &Game::getInstance() {
@@ -23,7 +26,7 @@ Level::Level *Game::getLevel() const {
 
 void Game::mainLoop() {
     while (true) {
-        if (level== nullptr) {
+        if (level == nullptr) {
             exitStatus.exitIsWin = false;
             exitStatus.finalScore = 0;
             return;
@@ -47,6 +50,7 @@ void Game::fireLevelExit(bool win) {
 }
 
 void Game::update() {
+    generateFood();
     level->getPlayer().doTick();
     if (level->getSnake().getHealth() <= 0)
         fireLevelExit(false);
@@ -102,4 +106,17 @@ void Game::initialize(Model::LevelInfo &levelInfo) {
 
 const Game::ExitStatus &Game::getExitStatus() const {
     return exitStatus;
+}
+
+void Game::generateFood() {
+    auto foodOnLevel = level->countFood();
+    std::uniform_int_distribution<> xRange(0, level->getMapSize().x - 1);
+    std::uniform_int_distribution<> yRange(0, level->getMapSize().y - 1);
+    while (foodOnLevel < maxFoodOnLevel) {
+        Point2D pos{(int16_t) xRange(randomEngine), (int16_t) yRange(randomEngine)};
+        if (level->getBlock(pos) == nullptr) {
+            level->setBlock(new Level::BlockFood(), pos);
+            ++foodOnLevel;
+        }
+    }
 }
