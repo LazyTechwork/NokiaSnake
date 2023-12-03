@@ -9,25 +9,6 @@
 int main() {
     setlocale(LC_ALL, "");
 
-    auto levelLoader = new Level::LevelLoader("./levels");
-    std::vector<Model::LevelInfo> levels = {};
-    std::cout << "Select level to load" << std::endl;
-    for (const auto &levelPath: levelLoader->getLoadedLevels()) {
-        auto level = Level::LevelLoader::loadLevel(levelPath);
-        if (level == nullptr)
-            continue;
-        levels.push_back({level->getName(), levelPath});
-        std::cout << levels.size() << ". " << level->getName() << std::endl;
-        delete level;
-    }
-
-    uint16_t levelNum;
-    do {
-        std::cout << "Select level by number: " << std::flush;
-        std::cin >> levelNum;
-        std::cout << std::endl << "Trying to load level #" << levelNum << std::endl;
-    } while (!(levelNum >= 1 && levelNum <= levels.size()));
-
     auto game = Game::getInstance();
     auto proxy = new Proxy::ConsoleProxy();
     if (!std::filesystem::exists("./settings.dat")) {
@@ -51,10 +32,10 @@ int main() {
     proxy->registerKeyMappings(userSettings.keyMappings);
     game.setGameProxy(proxy);
 
-    game.initialize(levels[levelNum - 1]);
+    while (proxy->renderLevelSelector(game));
+
     proxy->terminate();
 
-    delete levelLoader;
     delete proxy;
     return 0;
 }

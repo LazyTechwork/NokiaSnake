@@ -44,6 +44,8 @@ namespace Proxy {
         ActionQueue &getActionQueue() override;
 
         void render(const Game &game) override;
+
+        bool renderLevelSelector(Game &game);
     };
 
 } // Common

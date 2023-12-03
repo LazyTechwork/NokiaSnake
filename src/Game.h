@@ -23,6 +23,10 @@ private:
     Level::LevelLoader *levelLoader;
     Proxy::GameProxy *gameProxy = nullptr;
     bool exitLevel = false;
+    struct ExitStatus {
+        bool exitIsWin = false;
+        uint16_t finalScore = 0;
+    } exitStatus;
     std::map<Common::InputAction, Common::Direction> inputActionDirectionMapping = {
             {Common::InputAction::TURN_DOWN,  Common::Direction::UP},
             {Common::InputAction::TURN_UP,    Common::Direction::DOWN},
@@ -50,6 +54,8 @@ public:
     void initialize(Model::LevelInfo &levelInfo);
 
     void setGameProxy(Proxy::GameProxy *proxy);
+
+    const ExitStatus &getExitStatus() const;
 };
 
 

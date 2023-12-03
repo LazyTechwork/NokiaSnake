@@ -23,8 +23,13 @@ Level::Level *Game::getLevel() const {
 
 void Game::mainLoop() {
     while (true) {
-        if (exitLevel || level == nullptr) {
-            exitLevel = false;
+        if (level== nullptr) {
+            exitStatus.exitIsWin = false;
+            exitStatus.finalScore = 0;
+            return;
+        }
+        if (exitLevel) {
+            exitStatus.finalScore = level->getSnake().getScore();
             return;
         }
 
@@ -38,6 +43,7 @@ void Game::mainLoop() {
 
 void Game::fireLevelExit(bool win) {
     exitLevel = true;
+    exitStatus.exitIsWin = win;
 }
 
 void Game::update() {
@@ -88,7 +94,12 @@ void Game::processInput() {
 }
 
 void Game::initialize(Model::LevelInfo &levelInfo) {
+    exitLevel = false;
     auto loadedLevel = Level::LevelLoader::loadLevel(levelInfo.path);
     this->level = loadedLevel;
     mainLoop();
+}
+
+const Game::ExitStatus &Game::getExitStatus() const {
+    return exitStatus;
 }

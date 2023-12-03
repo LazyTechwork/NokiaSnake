@@ -25,7 +25,6 @@ namespace Proxy {
         init_pair(2, COLOR_BLACK, COLOR_WHITE);
         init_pair(3, COLOR_YELLOW, COLOR_BLACK);
         clear();
-        erase();
         noecho();
         raw();
         move(0, 0);
@@ -60,6 +59,9 @@ namespace Proxy {
     void ConsoleProxy::render(const Game &game) {
         renderLevel(*game.getLevel());
         renderSnake(game.getLevel()->getSnake());
+        renderInfo(*game.getLevel());
+
+        refresh();
     }
 
     void ConsoleProxy::renderSnake(Level::Snake &snake) {
@@ -95,8 +97,6 @@ namespace Proxy {
 
         for (const auto &item: positionsToRender)
             mvaddch(item.y, item.x, 'X' | A_BOLD | COLOR_PAIR(3));
-
-        refresh();
     }
 
     void ConsoleProxy::renderBlock(Point2D &pos, Level::Block &block) {
@@ -112,14 +112,79 @@ namespace Proxy {
                 if (block != nullptr)
                     renderBlock(pos, *block);
             }
-
-        refresh();
     }
 
     void ConsoleProxy::renderInfo(Level::Level &level) {
         auto mapSize = level.getMapSize();
         attron(A_BOLD);
+        move(mapSize.y + 2, 0);
+        clrtoeol();
         mvprintw(mapSize.y + 2, 0, "Score: %d  Health: %d", level.getSnake().getScore(), level.getSnake().getHealth());
         attroff(A_BOLD);
+    }
+
+    bool ConsoleProxy::renderLevelSelector(Game &game) {
+        clear();
+        auto levelLoader = new Level::LevelLoader("./levels");
+        std::vector<Model::LevelInfo> levels = {};
+        mvprintw(1, 1, "Select level to load:");
+        int y = 1, x = 2;
+        for (const auto &levelPath: levelLoader->getLoadedLevels()) {
+            auto level = Level::LevelLoader::loadLevel(levelPath);
+            if (level == nullptr)
+                continue;
+            levels.push_back({level->getName(), levelPath});
+            mvprintw(++y, x, level->getName().c_str());
+            delete level;
+        }
+
+        delete levelLoader;
+
+        mvprintw(y + 2, 1, "Press Q to exit the game, use arrow keys to select");
+
+        nodelay(stdscr, FALSE);
+        uint16_t levelNum = 1;
+        int key = 0;
+        do {
+            switch (key) {
+                case KEY_DOWN:
+                    chgat(-1, A_NORMAL, 1, NULL);
+                    ++levelNum;
+                    break;
+                case KEY_UP:
+                    chgat(-1, A_NORMAL, 1, NULL);
+                    --levelNum;
+                    break;
+                case 'q':
+                    return false;
+                default:
+                    break;
+            }
+
+            if (levelNum < 1)
+                levelNum = 1;
+            if (levelNum > levels.size())
+                levelNum = levels.size();
+
+            move(1 + levelNum, 1);
+            chgat(levels[levelNum - 1].name.size() + 2, A_BOLD, 2, NULL);
+            refresh();
+        } while ((key = getch()) != '\n');
+        nodelay(stdscr, TRUE);
+        clear();
+        game.initialize(levels[levelNum - 1]);
+        clear();
+        previousSnakePositions->clear();
+
+        mvprintw(3, 2, game.getExitStatus().exitIsWin ? "You have won! Congratulations!"
+                                                      : "You've lost. Try your luck next time");
+        mvprintw(4, 2, "Final score: %d", game.getExitStatus().finalScore);
+        mvprintw(6, 2, "Press any key to continue");
+
+        nodelay(stdscr, FALSE);
+        while (getch() == ERR);
+        nodelay(stdscr, TRUE);
+
+        return true;
     }
 } // Common
