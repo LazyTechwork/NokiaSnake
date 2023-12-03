@@ -38,6 +38,7 @@ int main() {
                         {KEY_DOWN, Common::InputAction::TURN_DOWN},
                         {KEY_LEFT, Common::InputAction::TURN_LEFT},
                         {KEY_RIGHT, Common::InputAction::TURN_RIGHT},
+                        {'q', Common::InputAction::EXIT},
                         {' ', Common::InputAction::PAUSE},
                 }
         };

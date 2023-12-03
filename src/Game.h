@@ -24,9 +24,9 @@ private:
     Proxy::GameProxy *gameProxy = nullptr;
     bool exitLevel = false;
     std::map<Common::InputAction, Common::Direction> inputActionDirectionMapping = {
-            {Common::InputAction::TURN_UP, Common::Direction::UP},
-            {Common::InputAction::TURN_DOWN, Common::Direction::DOWN},
-            {Common::InputAction::TURN_LEFT, Common::Direction::LEFT},
+            {Common::InputAction::TURN_DOWN,  Common::Direction::UP},
+            {Common::InputAction::TURN_UP,    Common::Direction::DOWN},
+            {Common::InputAction::TURN_LEFT,  Common::Direction::LEFT},
             {Common::InputAction::TURN_RIGHT, Common::Direction::RIGHT},
     };
 

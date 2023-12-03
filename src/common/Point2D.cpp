@@ -59,4 +59,12 @@ namespace Common {
     Point2D Point2D::operator-(const Point2D &p) const {
         return {static_cast<int16_t>(x - p.x), static_cast<int16_t>(y - p.y)};
     }
+
+    Point2D Point2D::operator*(const Point2D &p) const {
+        return {static_cast<int16_t>(x * p.x), static_cast<int16_t>(y * p.y)};
+    }
+
+    Point2D Point2D::operator*(int i) const {
+        return {static_cast<int16_t>(x * i), static_cast<int16_t>(y * i)};
+    }
 } // Common

@@ -4,7 +4,7 @@
 Player::Player(Level::Level *level) : level(level) {}
 
 void Player::doTick() {
-    auto lookingAt = level->getSnake().lookingAt();
+    auto lookingAt = level->getSnake().getHeadPosition() + level->getSnake().lookingAt();
     if (lookingAt < Game::zeroPoint || lookingAt > level->getMapSize()) {
         return;
     }

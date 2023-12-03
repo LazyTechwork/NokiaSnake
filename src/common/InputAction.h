@@ -6,7 +6,7 @@
 namespace Common {
 #pragma pack(push, 1)
     enum InputAction : uint8_t {
-        TURN_LEFT, TURN_RIGHT, TURN_UP, TURN_DOWN, PAUSE
+        TURN_LEFT, TURN_RIGHT, TURN_UP, TURN_DOWN, PAUSE, EXIT
     };
 #pragma pack(pop)
 }

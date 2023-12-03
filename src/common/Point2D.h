@@ -16,6 +16,10 @@ namespace Common {
 
         Point2D operator-(const Point2D &p) const;
 
+        Point2D operator*(const Point2D &p) const;
+
+        Point2D operator*(int i) const;
+
         Point2D &operator+=(const Point2D &p);
 
         bool operator==(const Point2D &rhs) const;

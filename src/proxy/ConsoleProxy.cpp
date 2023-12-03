@@ -23,7 +23,7 @@ namespace Proxy {
         start_color();
         init_pair(1, COLOR_WHITE, COLOR_BLACK);
         init_pair(2, COLOR_BLACK, COLOR_WHITE);
-        init_pair(3, COLOR_WHITE, COLOR_GREEN);
+        init_pair(3, COLOR_YELLOW, COLOR_BLACK);
         clear();
         erase();
         noecho();
@@ -63,7 +63,7 @@ namespace Proxy {
     }
 
     void ConsoleProxy::renderSnake(Level::Snake &snake) {
-        std::set<Point2D> snakePos = {snake.getHeadPosition()};
+        std::set<Point2D> snakePos{snake.getHeadPosition()};
         for (const auto &item: snake.getTail())
             snakePos.insert(item);
 
@@ -87,12 +87,14 @@ namespace Proxy {
                 std::inserter(positionsToRender, positionsToRender.begin())
         );
 
-
         previousSnakePositions->insert(positionsToRender.begin(), positionsToRender.end());
-        previousSnakePositions->erase(positionsToClear.begin(), positionsToClear.end());
+        for (const auto &item: positionsToClear) {
+            previousSnakePositions->erase(item);
+            mvaddch(item.y, item.x, ' ' | A_INVIS);
+        }
 
         for (const auto &item: positionsToRender)
-            mvaddch(item.y, item.x, 'X' | A_BLINK | A_BOLD | COLOR_PAIR(2));
+            mvaddch(item.y, item.x, 'X' | A_BOLD | COLOR_PAIR(3));
 
         refresh();
     }
@@ -112,5 +114,12 @@ namespace Proxy {
             }
 
         refresh();
+    }
+
+    void ConsoleProxy::renderInfo(Level::Level &level) {
+        auto mapSize = level.getMapSize();
+        attron(A_BOLD);
+        mvprintw(mapSize.y + 2, 0, "Score: %d  Health: %d", level.getSnake().getScore(), level.getSnake().getHealth());
+        attroff(A_BOLD);
     }
 } // Common

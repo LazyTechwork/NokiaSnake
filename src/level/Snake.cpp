@@ -27,7 +27,8 @@ namespace Level {
     }
 
     void Snake::setDirection(Direction direction) {
-        Snake::direction = direction;
+        if (Common::Point2D::fromDirection(direction) != Common::Point2D::fromDirection(Snake::direction) * -1)
+            Snake::direction = direction;
     }
 
     void Snake::setHealth(int8_t health) {

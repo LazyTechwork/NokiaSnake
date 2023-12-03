@@ -77,6 +77,9 @@ void Game::processInput() {
             case Common::InputAction::TURN_DOWN:
                 level->getSnake().setDirection(inputActionDirectionMapping[action]);
                 break;
+            case Common::InputAction::EXIT:
+                fireLevelExit(false);
+                break;
             default:
                 break;
         }

@@ -26,6 +26,8 @@ namespace Proxy {
 
         void renderSnake(Level::Snake &snake);
 
+        void renderInfo(Level::Level &level);
+
     public:
         virtual ~ConsoleProxy();
 
