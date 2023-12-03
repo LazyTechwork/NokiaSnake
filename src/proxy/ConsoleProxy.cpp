@@ -16,6 +16,7 @@ namespace Proxy {
         init_pair(3, COLOR_YELLOW, COLOR_BLACK);
         init_pair(4, COLOR_GREEN, COLOR_BLACK);
         init_pair(5, COLOR_CYAN, COLOR_BLACK);
+        init_pair(6, COLOR_RED, COLOR_BLACK);
         clear();
         noecho();
         raw();
@@ -57,43 +58,29 @@ namespace Proxy {
     }
 
     void ConsoleProxy::renderSnake(Level::Snake &snake) {
-        std::set<Point2D> snakePos{snake.getHeadPosition()};
-        for (const auto &item: snake.getTail())
-            snakePos.insert(item);
+        auto headPos = snake.getHeadPosition();
 
-        std::set<Point2D> intersection;
-        std::set_intersection(
-                snakePos.begin(), snakePos.end(), previousSnakePositions->begin(),
-                previousSnakePositions->end(), std::inserter(intersection, intersection.begin())
-        );
+        std::set<Point2D> snakePos{headPos};
+        snakePos.insert(snake.getTail().begin(), snake.getTail().end());
 
-        std::set<Point2D> positionsToClear;
-        std::set_difference(
-                previousSnakePositions->begin(), previousSnakePositions->end(),
-                intersection.begin(), intersection.end(),
-                std::inserter(positionsToClear, positionsToClear.begin())
-        );
+        for (const auto &item: *previousSnakePositions)
+            mvaddch(item.y, item.x, ' ');
 
-        std::set<Point2D> positionsToRender;
-        std::set_difference(
-                snakePos.begin(), snakePos.end(),
-                intersection.begin(), intersection.end(),
-                std::inserter(positionsToRender, positionsToRender.begin())
-        );
+        previousSnakePositions->clear();
+        previousSnakePositions->insert(snakePos.begin(), snakePos.end());
+        snakePos.erase(headPos);
 
-        previousSnakePositions->insert(positionsToRender.begin(), positionsToRender.end());
-        for (const auto &item: positionsToClear) {
-            previousSnakePositions->erase(item);
-            mvaddch(item.y, item.x, ' ' | A_INVIS);
-        }
+        if (resourceRegistry.contains("snake_head"))
+            mvaddch(headPos.y, headPos.x, resourceRegistry["snake_head"]);
+        else
+            mvaddch(headPos.y, headPos.x, 'X' | A_BOLD | COLOR_PAIR(3));
 
-        if (resourceRegistry.contains("snake_tail")) {
-            for (const auto &item: positionsToRender)
+        if (resourceRegistry.contains("snake_tail"))
+            for (const auto &item: snakePos)
                 mvaddch(item.y, item.x, resourceRegistry["snake_tail"]);
-        } else {
-            for (const auto &item: positionsToRender)
+        else
+            for (const auto &item: snakePos)
                 mvaddch(item.y, item.x, 'X' | A_BOLD | COLOR_PAIR(3));
-        }
     }
 
     void ConsoleProxy::renderBlock(Point2D &pos, Level::Block &block) {

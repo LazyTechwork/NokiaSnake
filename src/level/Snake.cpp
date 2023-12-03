@@ -57,12 +57,9 @@ namespace Level {
     }
 
     void Snake::pushTail(std::vector<Point2D> &p) {
-        auto newTailSize = tail.size() + p.size();
-        if (tail.max_size() > newTailSize)
-            tail.resize(newTailSize + 1);
-
         for (const auto &item: p)
             tail.push_back(item);
+        tail.shrink_to_fit();
     }
 
     uint16_t Snake::getScore() {

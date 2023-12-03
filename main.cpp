@@ -33,12 +33,12 @@ int main() {
     settingsFile.close();
     proxy->registerKeyMappings(userSettings.keyMappings);
 
-    proxy->registerResource("border", ('#' | COLOR_PAIR(2)));
+    proxy->registerResource("border", ('#' | A_DIM | COLOR_PAIR(2)));
     proxy->registerResource("gate:open", (' ' | A_BLINK | COLOR_PAIR(5)));
     proxy->registerResource("gate:closed", ('#' | COLOR_PAIR(5)));
-    proxy->registerResource("food", ('@' | A_BOLD | A_BLINK | COLOR_PAIR(2)));
-    proxy->registerResource("snake_head", ('0' | COLOR_PAIR(3)));
-    proxy->registerResource("snake_tail", ('0' | COLOR_PAIR(3)));
+    proxy->registerResource("food", ('@' | A_BOLD | A_BLINK | COLOR_PAIR(4)));
+    proxy->registerResource("snake_head", ('0' | COLOR_PAIR(6) | A_BOLD));
+    proxy->registerResource("snake_tail", ('&' | COLOR_PAIR(3)));
 
     game.setGameProxy(proxy);
 

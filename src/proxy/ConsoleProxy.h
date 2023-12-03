@@ -19,7 +19,6 @@ namespace Proxy {
         ActionQueue actionQueue = {};
         InputMappings keyMappings;
         ResourceRegistry resourceRegistry;
-        bool firedTermination = false;
         std::set<Point2D> *previousSnakePositions = new std::set<Point2D>;
 
         void renderBlock(Common::Point2D &pos, Level::Block &block);
