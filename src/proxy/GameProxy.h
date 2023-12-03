@@ -7,6 +7,8 @@
 
 typedef std::queue<Common::InputAction> ActionQueue;
 typedef std::map<int, Common::InputAction> InputMappings;
+
+class Game;
 namespace Proxy {
 
     class GameProxy {
@@ -20,6 +22,8 @@ namespace Proxy {
         virtual void registerKeyMapping(int key, Common::InputAction action) = 0;
 
         virtual ActionQueue &getActionQueue() = 0;
+
+        virtual void render(const Game &game) = 0;
     };
 
 } // Proxy

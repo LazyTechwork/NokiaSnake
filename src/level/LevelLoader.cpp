@@ -33,6 +33,7 @@ namespace Level {
             fStream.close();
 
             auto level = new Level(levelContract.mapSize, file);
+            level->setName(levelContract.name);
             auto map = level->getMap();
             for (int i = 0; i < levelContract.predefinedBlocksSize; ++i) {
                 auto blockContract = levelContract.map[i];

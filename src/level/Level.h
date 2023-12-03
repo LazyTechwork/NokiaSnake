@@ -13,6 +13,7 @@ namespace Level {
 
     class Level {
     private:
+        std::string name = "Unnamed level";
         std::filesystem::path levelFile;
         Snake *snake = nullptr;
         Player *player;
@@ -48,6 +49,10 @@ namespace Level {
         Level(Level &&l) noexcept;
 
         Level &operator=(Level &&l) noexcept;
+
+        const std::string &getName() const;
+
+        void setName(const std::string &name);
 
     };
 

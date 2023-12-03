@@ -115,4 +115,12 @@ namespace Level {
     Player & Level::getPlayer() const {
         return *player;
     }
+
+    const std::string &Level::getName() const {
+        return name;
+    }
+
+    void Level::setName(const std::string &name) {
+        Level::name = name;
+    }
 } // Level
