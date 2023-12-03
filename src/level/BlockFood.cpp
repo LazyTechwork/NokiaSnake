@@ -9,4 +9,8 @@ namespace Level {
         }
         setSnakeStepsOnEvent(event);
     }
+
+    std::string BlockFood::getResourceName() const {
+        return "food";
+    }
 } // Level

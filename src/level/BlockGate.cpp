@@ -10,4 +10,8 @@ namespace Level {
         }
         setSnakeStepsOnEvent(event);
     }
+
+    std::string BlockGate::getResourceName() const {
+        return passable ? "gate:open" : "gate:closed";
+    }
 } // Level

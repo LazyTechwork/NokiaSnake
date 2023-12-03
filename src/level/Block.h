@@ -27,6 +27,8 @@ namespace Level {
         void setSnakeStepsOnEvent(Event::BlockEvent *snakeStepsOnEvent);
 
         [[nodiscard]] bool isPassable() const;
+
+        [[nodiscard]] virtual std::string getResourceName() const = 0;
     };
 
 }

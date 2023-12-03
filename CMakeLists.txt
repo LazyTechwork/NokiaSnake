@@ -48,4 +48,4 @@ add_executable(NokiaSnake main.cpp
         src/event/LevelPassEvent.h
 )
 
-target_link_libraries(NokiaSnake ncurses pthread)
+target_link_libraries(NokiaSnake ncursesw pthread)

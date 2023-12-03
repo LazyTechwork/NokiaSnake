@@ -9,14 +9,16 @@
 #include "../common/InputAction.h"
 #include "../common/Point2D.h"
 #include "../level/Block.h"
-#include <ncurses.h>
+#include <ncursesw/ncurses.h>
 
+typedef std::map<std::string, chtype> ResourceRegistry;
 namespace Proxy {
 
     class ConsoleProxy : public GameProxy {
     private:
         ActionQueue actionQueue = {};
         InputMappings keyMappings;
+        ResourceRegistry resourceRegistry;
         bool firedTermination = false;
         std::set<Point2D> *previousSnakePositions = new std::set<Point2D>;
 
@@ -33,13 +35,15 @@ namespace Proxy {
 
         ConsoleProxy();
 
-        void inputHandler() override;
-
         void terminate() override;
 
         void registerKeyMappings(InputMappings mappings) override;
 
         void registerKeyMapping(int key, Common::InputAction action) override;
+
+        void registerResource(const std::string &resource, chtype texture);
+
+        void registerResources(const ResourceRegistry &resources);
 
         ActionQueue &getActionQueue() override;
 

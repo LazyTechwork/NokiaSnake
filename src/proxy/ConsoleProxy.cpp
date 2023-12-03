@@ -4,16 +4,6 @@
 #include <utility>
 
 namespace Proxy {
-    void ConsoleProxy::inputHandler() {
-        int key;
-        while (!firedTermination) {
-            if ((key = getch()) != ERR && keyMappings.contains(key))
-                actionQueue.push(keyMappings[key]);
-        }
-
-        firedTermination = false;
-    }
-
     void ConsoleProxy::terminate() {
         endwin();
     }
@@ -24,6 +14,8 @@ namespace Proxy {
         init_pair(1, COLOR_WHITE, COLOR_BLACK);
         init_pair(2, COLOR_BLACK, COLOR_WHITE);
         init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(4, COLOR_GREEN, COLOR_BLACK);
+        init_pair(5, COLOR_CYAN, COLOR_BLACK);
         clear();
         noecho();
         raw();
@@ -95,12 +87,21 @@ namespace Proxy {
             mvaddch(item.y, item.x, ' ' | A_INVIS);
         }
 
-        for (const auto &item: positionsToRender)
-            mvaddch(item.y, item.x, 'X' | A_BOLD | COLOR_PAIR(3));
+        if (resourceRegistry.contains("snake_tail")) {
+            for (const auto &item: positionsToRender)
+                mvaddch(item.y, item.x, resourceRegistry["snake_tail"]);
+        } else {
+            for (const auto &item: positionsToRender)
+                mvaddch(item.y, item.x, 'X' | A_BOLD | COLOR_PAIR(3));
+        }
     }
 
     void ConsoleProxy::renderBlock(Point2D &pos, Level::Block &block) {
-        mvaddch(pos.y, pos.x, ((char) 219) | COLOR_PAIR(1));
+        if (resourceRegistry.contains(block.getResourceName())) {
+            mvaddch(pos.y, pos.x, resourceRegistry[block.getResourceName()]);
+        } else {
+            mvaddch(pos.y, pos.x, '?' | COLOR_PAIR(1) | A_BLINK | A_BOLD);
+        }
     }
 
     void ConsoleProxy::renderLevel(Level::Level &level) {
@@ -186,5 +187,14 @@ namespace Proxy {
         nodelay(stdscr, TRUE);
 
         return true;
+    }
+
+    void ConsoleProxy::registerResource(const std::string &resource, chtype texture) {
+        resourceRegistry.insert_or_assign(resource, texture);
+    }
+
+    void ConsoleProxy::registerResources(const ResourceRegistry &resources) {
+        for (const auto &item: resources)
+            registerResource(item.first, item.second);
     }
 } // Common

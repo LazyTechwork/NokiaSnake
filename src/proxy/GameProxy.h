@@ -13,8 +13,6 @@ namespace Proxy {
 
     class GameProxy {
     public:
-        virtual void inputHandler() = 0;
-
         virtual void terminate() = 0;
 
         virtual void registerKeyMappings(InputMappings mappings) = 0;

@@ -12,6 +12,8 @@ namespace Level {
         Event::BlockEvent *event = nullptr;
     public:
         BlockFood();
+
+        std::string getResourceName() const override;
     };
 
 } // Level

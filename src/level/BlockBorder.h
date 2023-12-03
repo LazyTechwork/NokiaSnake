@@ -9,6 +9,8 @@ namespace Level {
     class BlockBorder: public Block {
     public:
         BlockBorder();
+
+        std::string getResourceName() const override;
     };
 
 } // Level

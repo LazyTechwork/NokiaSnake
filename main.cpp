@@ -1,13 +1,15 @@
-#include <iostream>
+#define _XOPEN_SOURCE_EXTENDED
+
 #include "src/Game.h"
 #include "src/proxy/ConsoleProxy.h"
 #include "src/contract/UserSettingsContract.h"
-#include <ncurses.h>
+#include <ncursesw/ncurses.h>
 #include <fstream>
-#include <thread>
+#include <clocale>
+#include <cstddef>
 
 int main() {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "en_US.UTF-8");
 
     auto game = Game::getInstance();
     auto proxy = new Proxy::ConsoleProxy();
@@ -30,6 +32,14 @@ int main() {
     settingsFile >> userSettings;
     settingsFile.close();
     proxy->registerKeyMappings(userSettings.keyMappings);
+
+    proxy->registerResource("border", ('#' | COLOR_PAIR(2)));
+    proxy->registerResource("gate:open", (' ' | A_BLINK | COLOR_PAIR(5)));
+    proxy->registerResource("gate:closed", ('#' | COLOR_PAIR(5)));
+    proxy->registerResource("food", ('@' | A_BOLD | A_BLINK | COLOR_PAIR(2)));
+    proxy->registerResource("snake_head", ('0' | COLOR_PAIR(3)));
+    proxy->registerResource("snake_tail", ('0' | COLOR_PAIR(3)));
+
     game.setGameProxy(proxy);
 
     while (proxy->renderLevelSelector(game));
