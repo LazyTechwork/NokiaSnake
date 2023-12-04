@@ -42,7 +42,6 @@ add_executable(NokiaSnake main.cpp
         src/common/InputAction.h
         src/contract/UserSettingsContract.cpp
         src/contract/UserSettingsContract.h
-        src/proxy/GameProxy.cpp
         src/proxy/GameProxy.h
         src/event/LevelPassEvent.cpp
         src/event/LevelPassEvent.h
