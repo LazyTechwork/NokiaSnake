@@ -2,10 +2,13 @@
 #include "Player.h"
 #include "contract/LevelContract.h"
 #include "level/BlockFood.h"
+#include "level/BlockGate.h"
 #include <filesystem>
 #include <chrono>
 #include <thread>
 #include <fstream>
+
+Game *Game::_instance = nullptr;
 
 Game::Game() {
     levelLoader = new Level::LevelLoader(
@@ -15,9 +18,11 @@ Game::Game() {
     randomEngine.seed(rd());
 };
 
-Game &Game::getInstance() {
-    static Game instance;
-    return instance;
+Game * Game::getInstance() {
+    if (_instance == nullptr)
+        _instance = new Game();
+
+    return _instance;
 }
 
 Level::Level *Game::getLevel() const {
@@ -51,9 +56,30 @@ void Game::fireLevelExit(bool win) {
 
 void Game::update() {
     generateFood();
+
     level->getPlayer().doTick();
+
     if (level->getSnake().getHealth() <= 0)
         fireLevelExit(false);
+
+    if (level->getSnake().getScore() == 15) {
+        Level::Block *gateBlock = nullptr;
+        auto mapSize = level->getMapSize();
+        for (int16_t y = 0; y < mapSize.y; ++y) {
+            for (int16_t x = 0; x < mapSize.x; ++x) {
+                auto block = level->getBlock({x, y});
+                if (block != nullptr && block->getResourceName() == "gate:closed") {
+                    gateBlock = block;
+                    break;
+                }
+            }
+            if (gateBlock != nullptr)
+                break;
+        }
+
+        if (gateBlock != nullptr)
+            gateBlock->setPassable(true);
+    }
 }
 
 std::vector<Model::LevelInfo> Game::getAvailableLevels() {

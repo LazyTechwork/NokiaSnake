@@ -29,6 +29,8 @@ namespace Level {
         [[nodiscard]] bool isPassable() const;
 
         [[nodiscard]] virtual std::string getResourceName() const = 0;
+
+        void setPassable(bool passable);
     };
 
 }

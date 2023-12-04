@@ -14,12 +14,8 @@ using Common::Point2D;
 namespace fs = std::filesystem;
 
 class Game {
-public:
-    constexpr static const Point2D zeroPoint = {0, 0};
-
-    static Game &getInstance();
-
 private:
+    static Game *_instance;
     Level::Level *level = nullptr;
     Level::LevelLoader *levelLoader;
     Proxy::GameProxy *gameProxy = nullptr;
@@ -50,6 +46,10 @@ private:
     void processInput();
 
 public:
+    constexpr static const Point2D zeroPoint = {0, 0};
+
+    static Game * getInstance();
+
     [[nodiscard]] Level::Level *getLevel() const;
 
     void fireLevelExit(bool win);

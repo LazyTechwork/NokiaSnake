@@ -17,4 +17,8 @@ namespace Level {
     void Block::setSnakeStepsOnEvent(Event::BlockEvent *snakeStepsOnEvent) {
         Block::snakeStepsOnEvent = snakeStepsOnEvent;
     }
+
+    void Block::setPassable(bool passable) {
+        Block::passable = passable;
+    }
 }

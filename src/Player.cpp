@@ -5,7 +5,7 @@ Player::Player(Level::Level *level) : level(level) {}
 
 void Player::doTick() {
     auto lookingAt = level->getSnake().getHeadPosition() + level->getSnake().lookingAt();
-    if (lookingAt < Game::zeroPoint || lookingAt > level->getMapSize()) {
+    if (lookingAt < Game::zeroPoint || lookingAt > level->getMapSize() - Point2D{1, 1}) {
         return;
     }
 
@@ -15,7 +15,7 @@ void Player::doTick() {
             damageEvent.dispatch(level->getSnake(), *lookingAtBlock);
         } else {
             level->getSnake().moveForward();
-            if(lookingAtBlock->onSnakeStepsOn(level->getSnake())) {
+            if (lookingAtBlock->onSnakeStepsOn(level->getSnake())) {
                 level->destroyBlock(lookingAt);
             }
         }
